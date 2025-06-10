@@ -23,6 +23,11 @@ pipeline {
                 sh 'docker build -t your-app:latest .'
             }
         }
+        stage('Build') {
+            steps {
+                sh 'echo "No build required for this type of project"'
+            }
+}
 
         stage('Deploy') {
             steps {
