@@ -2,28 +2,82 @@ from flask import Flask, request, jsonify, render_template_string
 
 app = Flask(__name__)
 
-# HTML-шаблон
+# HTML-шаблон з CSS
 HTML_PAGE = """
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <title>Tax Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            padding: 40px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type=number], input[type=submit] {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h2>Tax Calculator</h2>
-    <form method="post" action="/calculate">
-        <label for="income">Income (USD):</label><br>
-        <input type="number" step="0.01" name="income" required><br><br>
-        <label for="rate">Tax Rate (%):</label><br>
-        <input type="number" step="0.01" name="rate" min="0" max="100" required><br><br>
-        <input type="submit" value="Calculate">
-    </form>
+    <div class="container">
+        <h2>Tax Calculator</h2>
+        <form method="post" action="/calculate">
+            <label for="income">Income (USD):</label>
+            <input type="number" step="0.01" name="income" required>
+            
+            <label for="rate">Tax Rate (%):</label>
+            <input type="number" step="0.01" name="rate" min="0" max="100" required>
+            
+            <input type="submit" value="Calculate">
+        </form>
 
-    {% if tax is not none %}
-        <h3>Tax Amount: {{ tax }} USD</h3>
-    {% elif error %}
-        <h3 style="color:red;">Error: {{ error }}</h3>
-    {% endif %}
+        {% if tax is not none %}
+            <div class="result">Tax Amount: <strong>{{ tax }} USD</strong></div>
+        {% elif error %}
+            <div class="error">Error: {{ error }}</div>
+        {% endif %}
+    </div>
 </body>
 </html>
 """
