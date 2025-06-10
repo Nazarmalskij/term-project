@@ -19,9 +19,8 @@ pipeline {
                 export PATH="$HOME/.local/bin:$PATH"
                 pytest --disable-warnings
                 '''
+            }
         }
-}
-}
 
         stage('Docker Build') {
             steps {
