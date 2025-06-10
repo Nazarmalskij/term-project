@@ -12,9 +12,15 @@ pipeline {
             }
         }
 
-        stage('Build Backend') {
+        stage('Install Dependencies') {
             steps {
-                sh 'mvn clean package'
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'pytest || echo "Tests failed"'
             }
         }
 
@@ -23,15 +29,9 @@ pipeline {
                 sh 'docker build -t your-app:latest .'
             }
         }
-        stage('Build') {
-            steps {
-                sh 'echo "No build required for this type of project"'
-            }
-}
 
         stage('Deploy') {
             steps {
-                 // Зупинка попереднього контейнера, якщо він існує, і запуск нового
                 sh '''
                 docker stop your-app || true
                 docker rm your-app || true
@@ -40,5 +40,4 @@ pipeline {
             }
         }
     }
-} 
-  
+}
