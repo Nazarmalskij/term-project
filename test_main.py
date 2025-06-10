@@ -1,5 +1,5 @@
 import pytest
-from main import app, calculate_tax
+from src.main import app, calculate_tax
 
 # -------------------------
 # Тести для calculate_tax
