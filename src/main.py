@@ -12,15 +12,15 @@ HTML_PAGE = """
 <body>
     <h2>Tax Calculator</h2>
     <form method="post" action="/calculate">
-        <label for="income">Income:</label><br>
+        <label for="income">Income (USD):</label><br>
         <input type="number" step="0.01" name="income" required><br><br>
-        <label for="rate">Tax Rate (0-1):</label><br>
-        <input type="number" step="0.01" name="rate" min="0" max="1" required><br><br>
+        <label for="rate">Tax Rate (%):</label><br>
+        <input type="number" step="0.01" name="rate" min="0" max="100" required><br><br>
         <input type="submit" value="Calculate">
     </form>
 
     {% if tax is not none %}
-        <h3>Tax Amount: {{ tax }}</h3>
+        <h3>Tax Amount: {{ tax }} USD</h3>
     {% elif error %}
         <h3 style="color:red;">Error: {{ error }}</h3>
     {% endif %}
@@ -28,12 +28,12 @@ HTML_PAGE = """
 </html>
 """
 
-def calculate_tax(income, tax_rate):
+def calculate_tax(income, tax_rate_percent):
     if income < 0:
         raise ValueError("Income cannot be negative")
-    if not 0 <= tax_rate <= 1:
-        raise ValueError("Tax rate must be between 0 and 1")
-    return round(income * tax_rate, 2)
+    if not 0 <= tax_rate_percent <= 100:
+        raise ValueError("Tax rate must be between 0 and 100 percent")
+    return round(income * (tax_rate_percent / 100), 2)
 
 @app.route('/', methods=['GET'])
 def index():
