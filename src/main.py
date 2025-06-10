@@ -9,6 +9,10 @@ def calculate_tax(income, tax_rate):
         raise ValueError("Tax rate must be between 0 and 1")
     return round(income * tax_rate, 2)
 
+@app.route('/')
+def index():
+    return "Welcome to the Tax Calculator API! Use /tax?income=...&rate=..."
+
 @app.route('/tax', methods=['GET'])
 def tax():
     try:
@@ -20,5 +24,4 @@ def tax():
         return jsonify({"error": str(e)}), 400
 
 if __name__ == "__main__":
-        app.run(host="0.0.0.0", port=5000)
-
+    app.run(host="0.0.0.0", port=5000)
