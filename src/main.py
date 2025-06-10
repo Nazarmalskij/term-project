@@ -1,27 +1,23 @@
-def calculate_tax(income, tax_rate):
-    """
-    Обчислює суму податку.
+from flask import Flask, request, jsonify
 
-    :param income: float - дохід
-    :param tax_rate: float - податкова ставка у вигляді десяткового дробу (наприклад, 0.2 для 20%)
-    :return: float - розрахований податок
-    """
+app = Flask(__name__)
+
+def calculate_tax(income, tax_rate):
     if income < 0:
         raise ValueError("Income cannot be negative")
     if not 0 <= tax_rate <= 1:
         raise ValueError("Tax rate must be between 0 and 1")
     return round(income * tax_rate, 2)
 
-
-def main():
+@app.route('/tax', methods=['GET'])
+def tax():
     try:
-        income = float(input("Enter your income: "))
-        tax_rate = float(input("Enter tax rate (e.g. 0.2 for 20%): "))
-        tax = calculate_tax(income, tax_rate)
-        print(f"Your tax is: {tax}")
-    except ValueError as e:
-        print(f"Input error: {e}")
-
+        income = float(request.args.get('income'))
+        tax_rate = float(request.args.get('rate'))
+        tax_amount = calculate_tax(income, tax_rate)
+        return jsonify({"tax": tax_amount})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == "__main__":
-    main()
+    app.run(host="0.0.0.0", port=8080)
