@@ -12,11 +12,14 @@ pipeline {
             }
         }
 
-     //   stage('Run Tests') {
-     //       steps {
-     //             sh 'pytest || echo "Tests failed"'
-     //       }
-     //   }
+        stage('Run Tests') {
+            steps {
+                sh '''
+                pip install -r requirements.txt
+                pytest --disable-warnings
+                '''
+            }
+}
 
         stage('Docker Build') {
             steps {
