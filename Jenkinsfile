@@ -29,6 +29,7 @@ pipeline {
                 sh '''
                 docker stop your-app || true
                 docker rm your-app || true
+                fuser -k 8081/tcp || true
                 docker run -d --name your-app -p 8081:8080 your-app:latest
                 '''
             }
