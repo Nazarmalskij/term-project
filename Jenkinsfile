@@ -26,6 +26,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                 // Зупинка попереднього контейнера, якщо він існує, і запуск нового
                 sh '''
                 docker stop your-app || true
                 docker rm your-app || true
@@ -34,5 +35,5 @@ pipeline {
             }
         }
     }
-}
-    
+} 
+  
