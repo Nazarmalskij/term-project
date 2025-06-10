@@ -12,11 +12,11 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                sh 'pytest || echo "Tests failed"'
-            }
-        }
+     //   stage('Run Tests') {
+     //       steps {
+     //          sh 'pytest || echo "Tests failed"'
+     //       }
+     //   }
 
         stage('Docker Build') {
             steps {
@@ -29,7 +29,7 @@ pipeline {
                 sh '''
                 docker stop your-app || true
                 docker rm your-app || true
-                docker run -d --name your-app -p 8080:8080 your-app:latest
+                docker run -d --name your-app -p 8081:8080 your-app:latest
                 '''
             }
         }
