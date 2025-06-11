@@ -1,12 +1,9 @@
 import pytest
 from src.main import app, calculate_tax
 
-# -------------------------
-# Тести для calculate_tax
-# -------------------------
 
 def test_calculate_tax_normal():
-    assert calculate_tax(1000, 20) == 200.0  # 20%
+    assert calculate_tax(1000, 20) == 200.0
 
 def test_calculate_tax_zero_income():
     assert calculate_tax(0, 20) == 0.0
@@ -23,10 +20,6 @@ def test_calculate_tax_invalid_rate_low():
     with pytest.raises(ValueError, match="Tax rate must be between 0 and 100 percent"):
         calculate_tax(1000, -5)
 
-# -------------------------
-# Тести для Flask /tax
-# -------------------------
-
 @pytest.fixture
 def client():
     with app.test_client() as client:
@@ -38,7 +31,7 @@ def test_tax_endpoint_valid(client):
     assert response.json["tax"] == 200.0
 
 def test_tax_endpoint_missing_param(client):
-    response = client.get('/tax?income=1000')  # відсутній параметр rate
+    response = client.get('/tax?income=1000')
     assert response.status_code == 400
     assert "error" in response.json
 

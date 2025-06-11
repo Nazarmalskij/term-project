@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, render_template_string
 
 app = Flask(__name__)
 
-# HTML-шаблон з CSS
 HTML_PAGE = """
 <!doctype html>
 <html lang="en">
