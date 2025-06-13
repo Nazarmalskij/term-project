@@ -45,3 +45,4 @@ def test_tax_endpoint_invalid_logic(client):
     assert response.status_code == 400
     assert "error" in response.json
 
+
