@@ -44,3 +44,4 @@ def test_tax_endpoint_invalid_logic(client):
     response = client.get('/tax?income=-100&rate=20')
     assert response.status_code == 400
     assert "error" in response.json
+
