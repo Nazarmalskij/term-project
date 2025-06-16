@@ -85,7 +85,7 @@ def calculate_tax(income, tax_rate_percent):
     if income < 0:
         raise ValueError("Income cannot be negative")
     if not 0 <= tax_rate_percent <= 100:
-        raise ValueError("Tax rate must be between 0 and 100 percent")
+        raise ValueError("Tax rate must be between 0 and 100 percent ")
     return round(income * (tax_rate_percent / 100), 2)
 
 @app.route('/', methods=['GET'])
